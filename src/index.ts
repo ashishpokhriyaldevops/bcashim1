@@ -1,12 +1,12 @@
 import 'dotenv/config';
-import express from 'express';
+import express, { Application } from 'express';
 import axios from 'axios';
 import cors from 'cors';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
 
-const app = express();
+const app: Application = express();
 const port = 3000;
 
 app.use(express.json());
@@ -28,7 +28,7 @@ async function getAccessToken() {
             scope: scope,
             grant_type: "client_credentials"
         }));
-        return response.data.access_token;
+        return (response.data as { access_token: string }).access_token;
     } catch (error: any) {
         console.error("Error getting access token:", error.response?.data || error.message);
         throw new Error("Failed to retrieve access token");
