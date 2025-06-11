@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
-const { MCPServer } = require('@modelcontextprotocol/server');
+const { MCPServer, StreamableHttpTransport } = require('@modelcontextprotocol/server');
 const cors = require('cors');
 
 const app = express();
@@ -58,6 +58,15 @@ async function fetchCarModels()
 
 // Initialize MCP Server
 const mcpServer = new MCPServer();
+
+// Set up Streamable HTTP Transport for remote communication
+const streamableTransport = new StreamableHttpTransport({
+    path: '/mcp/stream', // Endpoint for streamable transport
+    server: app,         // Attach to Express app
+    cors: true           // Enable CORS if needed
+});
+
+mcpServer.addTransport(streamableTransport);
 
 // Add MCP Tools
 mcpServer.addTool({
