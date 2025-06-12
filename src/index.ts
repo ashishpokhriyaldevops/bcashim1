@@ -5,6 +5,8 @@ import cors from 'cors';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js';
 import { z } from 'zod';
+import https from 'https';
+import fs from 'fs';
 
 const app: Application = express();
 const port = 3000;
@@ -123,9 +125,15 @@ app.get('/mcp/events', (req, res) => {
     });
 });
 
-// Start HTTP server
-app.listen(port, () => {
-    console.log(`HTTP MCP Server running at http://localhost:${port}/mcp`);
+// HTTPS server options
+const options = {
+  key: fs.readFileSync('path/to/server.key'),
+  cert: fs.readFileSync('path/to/server.crt')
+};
+
+// Start HTTPS server
+https.createServer(options, app).listen(port, () => {
+  console.log(`HTTPS MCP Server running at https://<your-ip>:${port}/mcp`);
 });
 
 // Start MCP server (stdio)
