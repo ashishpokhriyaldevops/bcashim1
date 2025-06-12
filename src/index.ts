@@ -127,13 +127,13 @@ app.get('/mcp/events', (req, res) => {
 
 // HTTPS server options
 const options = {
-  key: fs.readFileSync('path/to/server.key'),
-  cert: fs.readFileSync('path/to/server.crt')
+    key: fs.readFileSync('path/to/server.key'),
+    cert: fs.readFileSync('path/to/server.crt')
 };
 
 // Start HTTPS server
 https.createServer(options, app).listen(port, () => {
-  console.log(`HTTPS MCP Server running at https://<your-ip>:${port}/mcp`);
+    console.log(`HTTPS MCP Server running at https://<your-ip>:${port}/mcp`);
 });
 
 // Start MCP server (stdio)
