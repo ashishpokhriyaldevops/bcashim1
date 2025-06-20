@@ -9,6 +9,8 @@ const axios_1 = __importDefault(require("axios"));
 const cors_1 = __importDefault(require("cors"));
 const mcp_js_1 = require("@modelcontextprotocol/sdk/server/mcp.js");
 const stdio_js_1 = require("@modelcontextprotocol/sdk/server/stdio.js");
+const https_1 = __importDefault(require("https"));
+const fs_1 = __importDefault(require("fs"));
 const app = (0, express_1.default)();
 const port = 3000;
 app.use(express_1.default.json());
@@ -105,9 +107,14 @@ app.get('/mcp/events', (req, res) => {
         res.end();
     });
 });
-// Start HTTP server
-app.listen(port, () => {
-    console.log(`HTTP MCP Server running at http://localhost:${port}/mcp`);
+// HTTPS server options
+const options = {
+    key: fs_1.default.readFileSync('path/to/server.key'),
+    cert: fs_1.default.readFileSync('path/to/server.crt')
+};
+// Start HTTPS server
+https_1.default.createServer(options, app).listen(port, () => {
+    console.log(`HTTPS MCP Server running at https://<your-ip>:${port}/mcp`);
 });
 // Start MCP server (stdio)
 async function main() {
