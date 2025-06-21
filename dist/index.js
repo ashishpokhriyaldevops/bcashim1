@@ -126,3 +126,52 @@ main().catch((error) => {
     console.error("Fatal error in main():", error);
     process.exit(1);
 });
+// OpenAPI Specification
+const openApiSpec = {
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Business Central MCP API",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://mn3hcnps-3000.inc1.devtunnels.ms/mcp"
+    }
+  ],
+  "paths": {
+    "/getCarBrands": {
+      "get": {
+        "summary": "Get Car Brands",
+        "responses": {
+          "200": {
+            "description": "Car brands list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getCarModels": {
+      "get": {
+        "summary": "Get Car Models",
+        "responses": {
+          "200": {
+            "description": "Car models list",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
