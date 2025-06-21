@@ -175,3 +175,7 @@ const openApiSpec = {
     }
   }
 };
+// Serve OpenAPI spec at /openapi.json
+app.get('/openapi.json', (req, res) => {
+    res.json(openApiSpec);
+});
